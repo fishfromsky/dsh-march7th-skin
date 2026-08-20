@@ -1,33 +1,32 @@
 # dsh-march7th-skin
 
-A standalone, pluggable **March 7th (Honkai: Star Rail)** skin for the dsh web GUI.
-It is a normal [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
-bundle-layer plugin: add it to a web profile and it mounts itself — no web-app
-source or dist wiring required.
+简体中文 | [English](README.en.md)
 
-What it does:
+一个独立的、可插拔的 **三月七（《崩坏：星穹铁道》）** 皮肤插件，用于 dsh 网页 GUI。
+它是标准的 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
+bundle 层插件：把它加进 web profile 即自动挂载，无需改动 web-app 的源码或前端 dist。
 
-- Overrides the web GUI's semantic alias tokens with a March 7th blue-pink palette
-  (light and dark schemes), via the `theme` service's override layer.
-- Replaces the conversation background, sidebar, settings header, input card, and
-  flanking character art, all served by the plugin's own node half under
-  `/skins/march7th/*` — the package ships every image in `assets/`.
-- Reparents the transcript scrollport so the composer never overlaps messages.
-- Unloads cleanly: the token layer, the stylesheet, the body gate attribute, and
-  the scrollport promotion are all reverted when the plugin is disposed.
+功能：
 
-## Install
+- 通过 `theme` 服务的覆盖层，将网页 GUI 的语义 alias token 替换为三月七蓝粉配色
+  （明暗两套主题均覆盖）。
+- 替换对话背景、侧栏、设置页头、输入卡片和输入框两侧的角色立绘；所有图片由插件
+  自己的 node 半部分在 `/skins/march7th/*` 下提供——资源随包携带在 `assets/` 里。
+- 重设对话滚动容器，使输入框不再遮挡正在阅读的消息。
+- 干净卸载：token 覆盖层、样式表、body 门控属性、滚动容器改造在插件销毁时全部还原。
 
-The plugin is installed like any dsh profile bundle. Two ways:
+## 安装
 
-1. **Plugin CLI** (once published to a registry):
+与任何 dsh profile bundle 一样安装，两种方式：
+
+1. **插件 CLI**（发布到 registry 之后）：
 
    ```sh
    dsh plugin --profile web add dsh-march7th-skin
    ```
 
-2. **Tarball** — copy `dsh-march7th-skin-<version>.tgz` into the profile directory
-   (`$DSH_HOME/profiles/web` by default), then edit the profile `package.json`:
+2. **Tarball**——把 `dsh-march7th-skin-<version>.tgz` 复制到 profile 目录（默认
+   `$DSH_HOME/profiles/web`），然后编辑 profile 的 `package.json`：
 
    ```json
    {
@@ -42,53 +41,49 @@ The plugin is installed like any dsh profile bundle. Two ways:
    }
    ```
 
-   Then run `pnpm install` in the profile directory and restart `dsh web`.
+   随后在 profile 目录执行 `pnpm install` 并重启 `dsh web`。
 
-The row registration is fully automatic: the package's `dsh.bundle.patch` points
-at its own `cordis.patch.yml`, which inserts the `march7th-skin` row into the
-composed profile. The profile's own `cordis.patch.yml` does not need to mention it.
+行注册完全自动：包的 `dsh.bundle.patch` 指向自带的 `cordis.patch.yml`，它会向组合后
+的 profile 插入 `march7th-skin` 行；profile 自己的 `cordis.patch.yml` 无需提及它。
 
-## Verify
+## 验证
 
-With `dsh web` running:
+在 `dsh web` 运行状态下：
 
 - `GET /skins/march7th/background.webp` → `200 image/webp`
-- `GET /plugins/dsh-march7th-skin/client.js` → `200` (the browser bundle)
-- The GUI shows the skin; `window.__DSH_BOOT__` lists `dsh-march7th-skin` among its
-  entries with `inject: ["@deepseek-ai/dsh-client-ui-theme"]`.
+- `GET /plugins/dsh-march7th-skin/client.js` → `200`（浏览器 bundle）
+- GUI 呈现皮肤；`window.__DSH_BOOT__` 的条目中包含 `dsh-march7th-skin`，且
+  `inject: ["@deepseek-ai/dsh-client-ui-theme"]`。
 
-## Uninstall
+## 卸载
 
-Remove `dsh-march7th-skin` from the profile's `dsh.profile.bundles` and
-`dependencies`, run `pnpm install` in the profile directory, and restart
-`dsh web`. The stock look returns in full — the plugin owns every style and
-attribute it mounts and reverts them on disposal.
+从 profile 的 `dsh.profile.bundles` 和 `dependencies` 中移除 `dsh-march7th-skin`，
+在 profile 目录执行 `pnpm install`，重启 `dsh web` 即可完全恢复原貌——插件挂载的
+每一份样式和属性都由它自己持有，销毁时全部还原。
 
-## Development
+## 开发
 
-Requires a checkout of `deepseek-harness` beside this package (the dev
-dependencies are `link:` paths into it).
+需要在包旁边有一份 `deepseek-harness` 检出（devDependencies 是指向它的 `link:` 路径）。
 
 ```sh
-pnpm install        # install dev links
-pnpm run build      # esbuild: lib/index.js (host ESM) + lib/client.js (single-file client bundle)
-pnpm run test       # node:test suite over the built lib/ (no extra dev deps)
-pnpm run check      # build + test
-pnpm run dev:sync   # push lib/ + assets into the live profile install for hot reload (no restart)
+pnpm install        # 安装开发链接
+pnpm run build      # esbuild：lib/index.js（宿主 ESM）+ lib/client.js（单文件客户端 bundle）
+pnpm run test       # 基于 node:test、针对已构建 lib/ 的测试套件（无额外开发依赖）
+pnpm run check      # 构建 + 测试
+pnpm run dev:sync   # 把 lib/ 与资源推入运行中的 profile 安装目录，热更新无需重启
 ```
 
-Host-half changes (`src/index.ts`) take effect on the next `dsh web` restart;
-client-half and asset changes hot-apply through `dev:sync`.
+宿主半部分（`src/index.ts`）的改动在下次 `dsh web` 重启后生效；客户端与资源的改动
+可通过 `dev:sync` 热应用。
 
-## License and assets
+## 许可与素材
 
-Code is MIT (`LICENSE`). The image assets in `assets/` are edited fan material
-derived from *Honkai: Star Rail* © miHoYo / HoYoverse, included for personal,
-non-commercial use only; re-distributing them commercially requires the right
-holder's permission.
+代码为 MIT（见 `LICENSE`）。`assets/` 中的图片是取自《崩坏：星穹铁道》
+© miHoYo / HoYoverse 的二次创作素材，仅用于个人、非商业用途；商业分发需另行取得
+版权方授权。
 
-## Known limitations
+## 已知限制
 
-- The skin's palette is fixed; there is no settings UI.
-- The asset route serves only `GET`/`HEAD` (405 otherwise) and only the shipped
-  asset types (`.webp` → `image/webp`, everything else `application/octet-stream`).
+- 皮肤配色是固定的，没有设置界面。
+- 资产路由只接受 `GET`/`HEAD`（其他方法返回 405），且只提供随包资源类型
+  （`.webp` → `image/webp`，其余为 `application/octet-stream`）。

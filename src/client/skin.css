@@ -1612,7 +1612,7 @@ body[data-march7th-skin] [data-dsh-drawer] .dsh-delete-session__more-menu {
    public DOM contract, so this targets the command suggestions without
    changing other listboxes such as attachments or popup-select commands. */
 body[data-march7th-skin] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command']) {
+  [role='listbox']:has([role='presentation'][data-source='command']) {
   --dsw-alias-label-primary: #6f3153;
   --dsw-alias-label-secondary: #87506f;
   --dsw-alias-label-tertiary: #9b7189;
@@ -1635,8 +1635,8 @@ body[data-march7th-skin] [data-composer-card]
 }
 
 body[data-march7th-skin] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
-  [role='presentation'][data-source='/ command'] {
+  [role='listbox']:has([role='presentation'][data-source='command'])
+  [role='presentation'][data-source='command'] {
   padding: 8px 12px 10px;
   color: #a6507e;
   font-size: 13px;
@@ -1646,7 +1646,7 @@ body[data-march7th-skin] [data-composer-card]
 }
 
 body[data-march7th-skin] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
+  [role='listbox']:has([role='presentation'][data-source='command'])
   button[role='option'] {
   min-height: 46px;
   padding: 10px 14px;
@@ -1662,23 +1662,23 @@ body[data-march7th-skin] [data-composer-card]
 }
 
 body[data-march7th-skin] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
-  button[role='option'] > span:nth-last-child(2):first-child,
-body[data-march7th-skin] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
-  button[role='option'] > span:first-child:not(:last-child) {
+  [role='listbox']:has([role='presentation'][data-source='command'])
+  button[role='option'] > span:nth-last-child(2):not([aria-hidden]) {
   color: #743252;
   font-weight: 650;
 }
 
 body[data-march7th-skin] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
-  button[role='option'] > span:last-child {
+  [role='listbox']:has([role='presentation'][data-source='command'])
+  button[role='option'] > span:first-child:not([aria-hidden]) + span:last-child,
+body[data-march7th-skin] [data-composer-card]
+  [role='listbox']:has([role='presentation'][data-source='command'])
+  button[role='option'] > span[aria-hidden] + span + span:last-child {
   color: #967089;
 }
 
 body[data-march7th-skin] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
+  [role='listbox']:has([role='presentation'][data-source='command'])
   button[role='option']:is(:hover, :focus-visible, [aria-selected='true']) {
   border-color: rgba(220, 92, 157, 0.34);
   background: linear-gradient(100deg, rgba(255, 211, 235, 0.82), rgba(227, 221, 255, 0.74));
@@ -1691,16 +1691,20 @@ body[data-march7th-skin] [data-composer-card]
 }
 
 body[data-march7th-skin] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
+  [role='listbox']:has([role='presentation'][data-source='command'])
   button[role='option']:is(:hover, :focus-visible, [aria-selected='true'])
-  > span:first-child:not(:last-child) {
+  > span:nth-last-child(2):not([aria-hidden]) {
   color: #8f315f;
 }
 
 body[data-march7th-skin] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
+  [role='listbox']:has([role='presentation'][data-source='command'])
   button[role='option']:is(:hover, :focus-visible, [aria-selected='true'])
-  > span:last-child {
+  > span:first-child:not([aria-hidden]) + span:last-child,
+body[data-march7th-skin] [data-composer-card]
+  [role='listbox']:has([role='presentation'][data-source='command'])
+  button[role='option']:is(:hover, :focus-visible, [aria-selected='true'])
+  > span[aria-hidden] + span + span:last-child {
   color: #875a75;
 }
 
@@ -1754,7 +1758,7 @@ body[data-march7th-skin][data-ds-dark-theme] [data-chat-flow-key]:hover {
 }
 
 body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command']) {
+  [role='listbox']:has([role='presentation'][data-source='command']) {
   --dsw-alias-label-primary: var(--m7-night-ink);
   --dsw-alias-label-secondary: var(--m7-night-secondary);
   --dsw-alias-label-tertiary: var(--m7-night-muted);
@@ -1775,13 +1779,13 @@ body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
 }
 
 body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
-  [role='presentation'][data-source='/ command'] {
+  [role='listbox']:has([role='presentation'][data-source='command'])
+  [role='presentation'][data-source='command'] {
   color: #d69bbb;
 }
 
 body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
+  [role='listbox']:has([role='presentation'][data-source='command'])
   button[role='option'] {
   border-color: transparent;
   background: transparent;
@@ -1790,19 +1794,22 @@ body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
 }
 
 body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
-  button[role='option'] > span:first-child:not(:last-child) {
+  [role='listbox']:has([role='presentation'][data-source='command'])
+  button[role='option'] > span:nth-last-child(2):not([aria-hidden]) {
   color: #f7eafa;
 }
 
 body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
-  button[role='option'] > span:last-child {
+  [role='listbox']:has([role='presentation'][data-source='command'])
+  button[role='option'] > span:first-child:not([aria-hidden]) + span:last-child,
+body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
+  [role='listbox']:has([role='presentation'][data-source='command'])
+  button[role='option'] > span[aria-hidden] + span + span:last-child {
   color: var(--m7-night-muted);
 }
 
 body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
+  [role='listbox']:has([role='presentation'][data-source='command'])
   button[role='option']:is(:hover, :focus-visible, [aria-selected='true']) {
   border-color: rgba(255, 143, 189, 0.3);
   background: linear-gradient(100deg, rgba(255, 111, 173, 0.17), rgba(148, 125, 235, 0.15));
@@ -1814,16 +1821,20 @@ body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
 }
 
 body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
+  [role='listbox']:has([role='presentation'][data-source='command'])
   button[role='option']:is(:hover, :focus-visible, [aria-selected='true'])
-  > span:first-child:not(:last-child) {
+  > span:nth-last-child(2):not([aria-hidden]) {
   color: #ffe7f2;
 }
 
 body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
-  [role='listbox']:has([role='presentation'][data-source='/ command'])
+  [role='listbox']:has([role='presentation'][data-source='command'])
   button[role='option']:is(:hover, :focus-visible, [aria-selected='true'])
-  > span:last-child {
+  > span:first-child:not([aria-hidden]) + span:last-child,
+body[data-march7th-skin][data-ds-dark-theme] [data-composer-card]
+  [role='listbox']:has([role='presentation'][data-source='command'])
+  button[role='option']:is(:hover, :focus-visible, [aria-selected='true'])
+  > span[aria-hidden] + span + span:last-child {
   color: #c9c2dc;
 }
 

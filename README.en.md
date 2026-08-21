@@ -1,22 +1,36 @@
-# dsh-march7th-skin
+# dsh-march7th-skin · Honkai: Star Rail March 7th skin
 
 [简体中文](README.md) | English
 
 A standalone, pluggable **March 7th (Honkai: Star Rail)** skin for the dsh web GUI.
 It is a normal [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
 bundle-layer plugin: add it to a web profile and it mounts itself — no web-app
-source or dist wiring required.
+source or dist wiring required. `apply()` overrides the web GUI's semantic alias
+tokens with a March 7th blue-pink palette (light and dark schemes) through the
+`theme` service's override layer, serves the conversation background, sidebar,
+settings header, input card, and flanking character art from its own node half
+under `/skins/march7th/*`, and reparents the transcript scrollport so the
+composer never overlaps messages. The effect disposer reverts the token layer,
+the stylesheet, the body gate attribute, and the scrollport promotion; it injects
+no services, emits no Cordis events, and never touches a model request.
 
-What it does:
+## Preview
 
-- Overrides the web GUI's semantic alias tokens with a March 7th blue-pink palette
-  (light and dark schemes), via the `theme` service's override layer.
-- Replaces the conversation background, sidebar, settings header, input card, and
-  flanking character art, all served by the plugin's own node half under
-  `/skins/march7th/*` — the package ships every image in `assets/`.
-- Reparents the transcript scrollport so the composer never overlaps messages.
-- Unloads cleanly: the token layer, the stylesheet, the body gate attribute, and
-  the scrollport promotion are all reverted when the plugin is disposed.
+Click an image to view it at full size.
+
+| Light mode | Dark mode |
+|---|---|
+| [![March 7th skin · light mode](preview/light.webp)](preview/light.webp) | [![March 7th skin · dark mode](preview/dark.webp)](preview/dark.webp) |
+
+## Features
+
+- March 7th blue-pink palette across both light and dark schemes (via the
+  `theme` service's override layer)
+- Conversation background, sidebar, settings header, input card, and flanking
+  character art, every image shipped in `assets/`
+- Transcript scrollport reparented so the composer never overlaps messages
+- Clean unload: the plugin owns every style and attribute it mounts and reverts
+  them all on disposal
 
 ## Install
 
@@ -50,21 +64,16 @@ The row registration is fully automatic: the package's `dsh.bundle.patch` points
 at its own `cordis.patch.yml`, which inserts the `march7th-skin` row into the
 composed profile. The profile's own `cordis.patch.yml` does not need to mention it.
 
-## Verify
+Load-and-go, unload-and-restore: remove the package from the profile's
+`dsh.profile.bundles` and `dependencies`, run `pnpm install`, and restart — the
+stock look returns in full.
 
-With `dsh web` running:
+## License and assets
 
-- `GET /skins/march7th/background.webp` → `200 image/webp`
-- `GET /plugins/dsh-march7th-skin/client.js` → `200` (the browser bundle)
-- The GUI shows the skin; `window.__DSH_BOOT__` lists `dsh-march7th-skin` among its
-  entries with `inject: ["@deepseek-ai/dsh-client-ui-theme"]`.
-
-## Uninstall
-
-Remove `dsh-march7th-skin` from the profile's `dsh.profile.bundles` and
-`dependencies`, run `pnpm install` in the profile directory, and restart
-`dsh web`. The stock look returns in full — the plugin owns every style and
-attribute it mounts and reverts them on disposal.
+The code is released under **MIT** (see `LICENSE`). The image assets in `assets/`
+are edited fan material derived from *Honkai: Star Rail* © miHoYo / HoYoverse,
+included for personal, non-commercial use only; re-distributing them commercially
+requires the right holder's permission.
 
 ## Development
 
@@ -82,15 +91,22 @@ pnpm run dev:sync   # push lib/ + assets into the live profile install for hot r
 Host-half changes (`src/index.ts`) take effect on the next `dsh web` restart;
 client-half and asset changes hot-apply through `dev:sync`.
 
-## License and assets
+## Verify
 
-Code is MIT (`LICENSE`). The image assets in `assets/` are edited fan material
-derived from *Honkai: Star Rail* © miHoYo / HoYoverse, included for personal,
-non-commercial use only; re-distributing them commercially requires the right
-holder's permission.
+With `dsh web` running:
+
+- `GET /skins/march7th/background.webp` → `200 image/webp`
+- `GET /plugins/dsh-march7th-skin/client.js` → `200` (the browser bundle)
+- The GUI shows the skin; `window.__DSH_BOOT__` lists `dsh-march7th-skin` among its
+  entries with `inject: ["@deepseek-ai/dsh-client-ui-theme"]`
 
 ## Known limitations
 
 - The skin's palette is fixed; there is no settings UI.
 - The asset route serves only `GET`/`HEAD` (405 otherwise) and only the shipped
   asset types (`.webp` → `image/webp`, everything else `application/octet-stream`).
+
+## License
+
+Code is MIT; the assets are fan material of *Honkai: Star Rail* © miHoYo /
+HoYoverse, for personal, non-commercial use only. See `LICENSE`.

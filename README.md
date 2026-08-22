@@ -21,37 +21,28 @@ DeepSeek Harness Web GUI 的独立可插拔 **三月七(《崩坏:星穹铁道�
 
 ## 安装
 
-与任何 dsh profile bundle 一样安装,两种方式:
+在 `deepseek-harness` 仓库根目录中执行以下命令，通过 GitHub 在线安装：
 
-1. **插件 CLI**(发布到 registry 之后):
+```sh
+pnpm dsh plugin --profile web add "github:fishfromsky/dsh-march7th-skin"
+```
 
-   ```sh
-   dsh plugin --profile web add dsh-march7th-skin
-   ```
+DSH CLI 会自动下载插件、写入 web profile 的依赖，并将其加入
+`dsh.profile.bundles`。安装完成后重启 Web：
 
-2. **Tarball**——把 `dsh-march7th-skin-<version>.tgz` 复制到 profile 目录(默认
-   `$DSH_HOME/profiles/web`),然后编辑 profile 的 `package.json`:
+```sh
+pnpm dsh web
+```
 
-   ```json
-   {
-     "dsh": {
-       "profile": {
-         "bundles": ["@deepseek-ai/dsh-base", "@deepseek-ai/dsh-web-app", "dsh-march7th-skin"]
-       }
-     },
-     "dependencies": {
-       "dsh-march7th-skin": "file:dsh-march7th-skin-0.3.0.tgz"
-     }
-   }
-   ```
+插件的 `dsh.bundle.patch` 指向自带的 `cordis.patch.yml`，会自动向组合后的
+profile 插入 `march7th-skin` 行；无需手动修改 profile 的 `package.json` 或
+`cordis.patch.yml`。
 
-   随后在 profile 目录执行 `pnpm install` 并重启 `dsh web`。
+卸载：
 
-行注册完全自动:包的 `dsh.bundle.patch` 指向自带的 `cordis.patch.yml`,它会向组合后的
-profile 插入 `march7th-skin` 行;profile 自己的 `cordis.patch.yml` 无需提及它。
-
-加载即生效、卸载即复原:从 profile 的 `dsh.profile.bundles` 与 `dependencies` 移除本包、
-`pnpm install` 并重启,原貌即完全恢复。
+```sh
+pnpm dsh plugin --profile web remove dsh-march7th-skin
+```
 
 ## 素材来源与许可
 
@@ -78,12 +69,11 @@ pnpm run dev:sync   # 把 lib/ 与资源推入运行中的 profile 安装目录,
 ```sh
 pnpm install --frozen-lockfile
 pnpm run check
-pnpm run release:pack    # 生成 release/dsh-march7th-skin-<version>.tgz
 pnpm run publish:dry-run # 检查 registry 发布清单，不实际上传
 pnpm publish             # 确认版本号、更新日志和账号权限后执行
 ```
 
-`prepack` 会在打包和发布前自动执行完整检查。发布包只包含运行文件、许可说明、
+`prepack` 会在发布前自动执行完整检查。发布包只包含运行文件、许可说明、
 英文文档和预览图，不包含源码、测试或开发脚本。
 
 ## 验证

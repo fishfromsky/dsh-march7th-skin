@@ -34,39 +34,29 @@ Click an image to view it at full size.
 
 ## Install
 
-The plugin is installed like any dsh profile bundle. Two ways:
+From the `deepseek-harness` repository root, install the plugin directly from
+GitHub:
 
-1. **Plugin CLI** (once published to a registry):
+```sh
+pnpm dsh plugin --profile web add "github:fishfromsky/dsh-march7th-skin"
+```
 
-   ```sh
-   dsh plugin --profile web add dsh-march7th-skin
-   ```
+The DSH CLI downloads the plugin, records it as a web-profile dependency, and
+adds it to `dsh.profile.bundles`. Restart the web profile after installation:
 
-2. **Tarball** — copy `dsh-march7th-skin-<version>.tgz` into the profile directory
-   (`$DSH_HOME/profiles/web` by default), then edit the profile `package.json`:
+```sh
+pnpm dsh web
+```
 
-   ```json
-   {
-     "dsh": {
-       "profile": {
-         "bundles": ["@deepseek-ai/dsh-base", "@deepseek-ai/dsh-web-app", "dsh-march7th-skin"]
-       }
-     },
-     "dependencies": {
-       "dsh-march7th-skin": "file:dsh-march7th-skin-0.3.0.tgz"
-     }
-   }
-   ```
+The package's `dsh.bundle.patch` points to its bundled `cordis.patch.yml`, which
+inserts the `march7th-skin` row automatically. There is no need to edit the
+profile's `package.json` or `cordis.patch.yml` manually.
 
-   Then run `pnpm install` in the profile directory and restart `dsh web`.
+To uninstall:
 
-The row registration is fully automatic: the package's `dsh.bundle.patch` points
-at its own `cordis.patch.yml`, which inserts the `march7th-skin` row into the
-composed profile. The profile's own `cordis.patch.yml` does not need to mention it.
-
-Load-and-go, unload-and-restore: remove the package from the profile's
-`dsh.profile.bundles` and `dependencies`, run `pnpm install`, and restart — the
-stock look returns in full.
+```sh
+pnpm dsh plugin --profile web remove dsh-march7th-skin
+```
 
 ## License and assets
 
@@ -95,13 +85,12 @@ client-half and asset changes hot-apply through `dev:sync`.
 ```sh
 pnpm install --frozen-lockfile
 pnpm run check
-pnpm run release:pack    # creates release/dsh-march7th-skin-<version>.tgz
 pnpm run publish:dry-run # validates the registry payload without uploading it
 pnpm publish             # run after checking the version, changelog, and account access
 ```
 
-The `prepack` hook runs the complete check automatically before packing or
-publishing. The package contains only runtime files, license information, English
+The `prepack` hook runs the complete check automatically before publishing. The
+package contains only runtime files, license information, English
 documentation, and preview images—not source, tests, or development scripts.
 
 ## Verify

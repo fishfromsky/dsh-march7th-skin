@@ -1172,7 +1172,7 @@ body[data-march7th-skin] [data-slot='sidebar']
   border: 0;
   border-radius: 18px;
   background:
-    url('/skins/march7th/new%20session.webp')
+    url('/skins/march7th/new-session.webp')
     center / 100% 100% no-repeat;
   color: #a64279;
   font-weight: 600;
@@ -1182,7 +1182,7 @@ body[data-march7th-skin] [data-slot='sidebar']
 body[data-march7th-skin] [data-slot='sidebar']
   > *:has(> :first-child > button + button) > button:hover {
   background:
-    url('/skins/march7th/new%20session.webp')
+    url('/skins/march7th/new-session.webp')
     center / 100% 100% no-repeat;
   color: #8f3268;
   filter:

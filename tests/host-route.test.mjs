@@ -6,6 +6,7 @@
  */
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
 
 import { name, inject, apply } from '../lib/index.js'
 
@@ -68,6 +69,22 @@ test('serves a shipped asset with its webp content type', async () => {
   assert.equal(res.status, 200)
   assert.equal(res.headers['content-type'], 'image/webp')
   assert.ok(res.body.length > 0)
+})
+
+test('serves every skin asset referenced by the client bundle', async () => {
+  const clientBundle = await readFile(new URL('../lib/client.js', import.meta.url), 'utf8')
+  const assetUrls = [...new Set(clientBundle.match(/\/skins\/march7th\/[^'"()\s]+\.webp/g) ?? [])]
+  assert.ok(assetUrls.includes('/skins/march7th/new-session.webp'))
+
+  const { ctx, routes } = boot()
+  apply(ctx)
+  for (const url of assetUrls) {
+    const res = resStub()
+    await routes[0].handler(req('GET', url), res)
+    assert.equal(res.status, 200, `${url} should resolve to a packaged asset`)
+    assert.equal(res.headers['content-type'], 'image/webp')
+    assert.ok(res.body.length > 0)
+  }
 })
 
 test('answers 404 for a missing asset', async () => {

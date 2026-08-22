@@ -8,24 +8,15 @@ importers:
 
   .:
     devDependencies:
-      '@deepseek-ai/cordis':
-        specifier: link:../deepseek-harness/vendor/cordis
-        version: link:../deepseek-harness/vendor/cordis
-      '@deepseek-ai/dsh-client-runtime':
-        specifier: link:../deepseek-harness/packages/client/runtime
-        version: link:../deepseek-harness/packages/client/runtime
-      '@deepseek-ai/dsh-client-ui-theme':
-        specifier: link:../deepseek-harness/packages/client/ui-theme
-        version: link:../deepseek-harness/packages/client/ui-theme
-      '@deepseek-ai/dsh-host-webserver':
-        specifier: link:../deepseek-harness/packages/host/webserver
-        version: link:../deepseek-harness/packages/host/webserver
       '@types/node':
         specifier: ^24.0.0
         version: 24.13.3
       esbuild:
         specifier: ^0.25.0
         version: 0.25.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
 
 packages:
 
@@ -187,6 +178,11 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   undici-types@7.18.2:
     resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
 
@@ -298,5 +294,7 @@ snapshots:
       '@esbuild/win32-arm64': 0.25.0
       '@esbuild/win32-ia32': 0.25.0
       '@esbuild/win32-x64': 0.25.0
+
+  typescript@5.9.3: {}
 
   undici-types@7.18.2: {}

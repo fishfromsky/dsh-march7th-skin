@@ -1,6 +1,6 @@
 # dsh-march7th-skin · 星穹铁道三月七皮肤
 
-简体中文 | [English](README.en.md)
+简体中文 | [English](docs/README.en.md) | [更新日志](docs/CHANGELOG.md)
 
 DeepSeek Harness Web GUI 的独立可插拔 **三月七(《崩坏:星穹铁道》)** 皮肤。标准 bundle 层插件:加入 web profile 即自动挂载,无需改动 web-app 源码或前端 dist。`apply()` 通过 `theme` 服务的覆盖层把语义 alias token 替换为三月七蓝粉配色(明暗两套),由插件自己的 node 半部分在 `/skins/march7th/*` 提供对话背景、侧栏、设置页头、输入卡片与两侧角色立绘,并重设对话滚动容器避免输入框遮挡消息。effect 销毁器还原 token 覆盖层、样式表、body 门控属性与滚动容器改造;不注入服务、不发出 Cordis 事件、不触达模型请求。
 
@@ -10,7 +10,7 @@ DeepSeek Harness Web GUI 的独立可插拔 **三月七(《崩坏:星穹铁道�
 
 | 亮色模式 | 暗色模式 |
 |---|---|
-| [![三月七皮肤 · 亮色模式](preview/light.webp)](preview/light.webp) | [![三月七皮肤 · 暗色模式](preview/dark.webp)](preview/dark.webp) |
+| [![三月七皮肤 · 亮色模式](docs/preview/light.webp)](docs/preview/light.webp) | [![三月七皮肤 · 暗色模式](docs/preview/dark.webp)](docs/preview/dark.webp) |
 
 ## 特性
 
@@ -40,7 +40,7 @@ DeepSeek Harness Web GUI 的独立可插拔 **三月七(《崩坏:星穹铁道�
        }
      },
      "dependencies": {
-       "dsh-march7th-skin": "file:dsh-march7th-skin-0.2.0.tgz"
+       "dsh-march7th-skin": "file:dsh-march7th-skin-0.3.0.tgz"
      }
    }
    ```
@@ -55,24 +55,36 @@ profile 插入 `march7th-skin` 行;profile 自己的 `cordis.patch.yml` 无需�
 
 ## 素材来源与许可
 
-代码以 **MIT**(见 `LICENSE`)发布。`assets/` 中的图片是取自《崩坏:星穹铁道》
-© miHoYo / HoYoverse 的二次创作素材,仅用于个人、非商业用途;商业分发需另行取得
-版权方授权。
+源代码以 **MIT**（见 `LICENSE`）发布。`assets/` 中的图片不在 MIT 授权范围内：
+它们是取自《崩坏：星穹铁道》© miHoYo / HoYoverse 的二次创作素材，仅用于个人、
+非商业用途；商业分发需另行取得版权方授权。本项目与 miHoYo / HoYoverse 无关联，
+也未获得其官方认可。
 
 ## 开发与构建
 
-需要在包旁边有一份 `deepseek-harness` 检出(devDependencies 是指向它的 `link:` 路径)。
-
 ```sh
-pnpm install        # 安装开发链接
+pnpm install        # 从 registry 安装开发依赖
 pnpm run build      # esbuild:lib/index.js(宿主 ESM)+ lib/client.js(单文件客户端 bundle)
-pnpm run test       # 基于 node:test、针对已构建 lib/ 的测试套件(无额外开发依赖)
-pnpm run check      # 构建 + 测试
+pnpm run test       # 基于 node:test、针对已构建 lib/ 的测试套件
+pnpm run check      # 类型检查 + 构建 + 测试
 pnpm run dev:sync   # 把 lib/ 与资源推入运行中的 profile 安装目录,热更新无需重启
 ```
 
 宿主半部分(`src/index.ts`)的改动在下次 `dsh web` 重启后生效;客户端与资源的改动
 可通过 `dev:sync` 热应用。
+
+## 发布
+
+```sh
+pnpm install --frozen-lockfile
+pnpm run check
+pnpm run release:pack    # 生成 release/dsh-march7th-skin-<version>.tgz
+pnpm run publish:dry-run # 检查 registry 发布清单，不实际上传
+pnpm publish             # 确认版本号、更新日志和账号权限后执行
+```
+
+`prepack` 会在打包和发布前自动执行完整检查。发布包只包含运行文件、许可说明、
+英文文档和预览图，不包含源码、测试或开发脚本。
 
 ## 验证
 
@@ -91,5 +103,4 @@ pnpm run dev:sync   # 把 lib/ 与资源推入运行中的 profile 安装目录,
 
 ## 许可
 
-代码 MIT;素材为《崩坏:星穹铁道》© miHoYo / HoYoverse 的二创,仅限个人非商业使用。
-见 `LICENSE`。
+代码 MIT；图片素材不在 MIT 授权范围内，仅限个人非商业使用。见 `LICENSE`。

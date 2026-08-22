@@ -13,30 +13,36 @@ import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from 'node:fs'
 import { homedir } from 'node:os'
-import { join } from 'node:path'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const projectRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
 
 // 1) Rebuild lib/ (host ESM + client CJS) — same as `pnpm run build`.
-execFileSync(process.execPath, ['build.mjs'], { cwd: process.cwd(), stdio: 'inherit' })
+execFileSync(process.execPath, [join(projectRoot, 'scripts', 'build.mjs')], {
+  cwd: projectRoot,
+  stdio: 'inherit',
+})
 
 // 2) Locate the live profile install.
 const dshHome = process.env.DSH_HOME ?? join(homedir(), '.dsh')
 const libDir = join(dshHome, 'profiles', 'web', 'node_modules', 'dsh-march7th-skin', 'lib')
 if (!existsSync(libDir)) {
-  console.error(`dev-sync: no install at ${libDir} — run "pnpm pack", copy the tarball into the profile and "pnpm install" there first`)
+  console.error(`dev-sync: no install at ${libDir} — run "pnpm run release:pack", copy the tarball into the profile and "pnpm install" there first`)
   process.exit(1)
 }
 
 // 3) Push the client bundle (the HMR poll watches exactly this file).
 mkdirSync(libDir, { recursive: true })
 for (const file of ['client.js', 'client.js.map']) {
-  copyFileSync(join('lib', file), join(libDir, file))
+  copyFileSync(join(projectRoot, 'lib', file), join(libDir, file))
   console.log(`dev-sync: pushed lib/${file}`)
 }
 
 // 4) Push image assets used by the stylesheet. The profile package is a
 //    regular directory rather than a symlink to this checkout, so a newly
 //    uploaded image would otherwise return 404 even though the CSS is live.
-const sourceAssetsDir = join(process.cwd(), 'assets')
+const sourceAssetsDir = join(projectRoot, 'assets')
 const targetAssetsDir = join(libDir, '..', 'assets')
 mkdirSync(targetAssetsDir, { recursive: true })
 for (const file of readdirSync(sourceAssetsDir)) {

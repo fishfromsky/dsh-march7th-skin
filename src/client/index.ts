@@ -8,9 +8,7 @@
  * text and keeps it inside the single client bundle, so the plugin can still
  * mount and retract its exact style element during hot switching.
  */
-import type { ClientContext } from '@deepseek-ai/dsh-client-runtime/client'
-// Type-only: pulls the ui-theme Context merge (ctx.theme + 'theme/change').
-import type {} from '@deepseek-ai/dsh-client-ui-theme/client'
+import type { ClientContext } from '../contracts.js'
 import SKIN_CSS from './skin.css'
 
 /** Theme-override layer identity (re-registering replaces the same layer). */

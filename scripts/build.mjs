@@ -9,14 +9,20 @@
  */
 import { build } from 'esbuild'
 import { mkdirSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-mkdirSync('lib', { recursive: true })
+const projectRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
+const libDir = join(projectRoot, 'lib')
+
+mkdirSync(libDir, { recursive: true })
 
 const dshExternal = ['@deepseek-ai/cordis', '@deepseek-ai/dsh-*']
 
 await build({
+  absWorkingDir: projectRoot,
   entryPoints: ['src/index.ts'],
-  outfile: 'lib/index.js',
+  outfile: join(libDir, 'index.js'),
   bundle: true,
   format: 'esm',
   platform: 'node',
@@ -27,8 +33,9 @@ await build({
 })
 
 await build({
+  absWorkingDir: projectRoot,
   entryPoints: ['src/client/index.ts'],
-  outfile: 'lib/client.js',
+  outfile: join(libDir, 'client.js'),
   bundle: true,
   format: 'cjs',
   platform: 'browser',

@@ -10,9 +10,7 @@
 import { readFile } from 'node:fs/promises'
 import { extname, join, normalize, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import type { Context } from '@deepseek-ai/cordis'
-// Type-only: brings the `ctx.webServer` Context merge into this program.
-import type {} from '@deepseek-ai/dsh-host-webserver'
+import type { HostContext } from './contracts.js'
 
 /** Cordis plugin name (the Loader entry and client bundle id). */
 export const name = 'dsh-march7th-skin'
@@ -32,7 +30,7 @@ const MIME: Record<string, string> = {
  * Mount the asset route: serve `<pkg>/assets` under `ASSET_PREFIX`.
  * @param ctx - host cordis context.
  */
-export function apply(ctx: Context): void {
+export function apply(ctx: HostContext): void {
   // The assets live beside the built entry: lib/index.js -> <pkg>/assets.
   // fileURLToPath keeps the trailing separator of a directory URL; strip it
   // so the traversal guard can compare against `<root><sep>` below.

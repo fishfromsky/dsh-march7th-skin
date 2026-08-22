@@ -1,3 +1,10 @@
+Code license
+============
+
+The MIT License below applies to this project's source code, generated bundles,
+documentation, and configuration files. It does not apply to the image files in
+the `assets/` and `docs/preview/` directories.
+
 MIT License
 
 Copyright (c) 2026 dsh-march7th-skin contributors
@@ -19,3 +26,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Image asset notice
+==================
+
+The image files in `assets/` and `docs/preview/` are edited fan material derived
+from Honkai: Star Rail, © miHoYo / HoYoverse. They are not covered by the MIT
+License above and are included for personal, non-commercial use only. Commercial
+redistribution requires permission from the applicable right holder.
+
+This project is unaffiliated with and is not endorsed by miHoYo or HoYoverse.

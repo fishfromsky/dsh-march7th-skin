@@ -1,6 +1,6 @@
 # dsh-march7th-skin · Honkai: Star Rail March 7th skin
 
-[简体中文](README.md) | English
+[简体中文](../README.md) | English | [Changelog](CHANGELOG.md)
 
 A standalone, pluggable **March 7th (Honkai: Star Rail)** skin for the dsh web GUI.
 It is a normal [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
@@ -53,7 +53,7 @@ The plugin is installed like any dsh profile bundle. Two ways:
        }
      },
      "dependencies": {
-       "dsh-march7th-skin": "file:dsh-march7th-skin-0.2.0.tgz"
+       "dsh-march7th-skin": "file:dsh-march7th-skin-0.3.0.tgz"
      }
    }
    ```
@@ -70,26 +70,39 @@ stock look returns in full.
 
 ## License and assets
 
-The code is released under **MIT** (see `LICENSE`). The image assets in `assets/`
-are edited fan material derived from *Honkai: Star Rail* © miHoYo / HoYoverse,
-included for personal, non-commercial use only; re-distributing them commercially
-requires the right holder's permission.
+The source code is released under **MIT** (see [`LICENSE`](../LICENSE)). The image
+assets in `assets/` are excluded from the MIT license. They are edited fan material
+derived from *Honkai: Star Rail* © miHoYo / HoYoverse and are included for personal,
+non-commercial use only; commercial redistribution requires the right holder's
+permission. This project is unaffiliated with and is not endorsed by miHoYo or
+HoYoverse.
 
 ## Development
 
-Requires a checkout of `deepseek-harness` beside this package (the dev
-dependencies are `link:` paths into it).
-
 ```sh
-pnpm install        # install dev links
+pnpm install        # install development dependencies from the registry
 pnpm run build      # esbuild: lib/index.js (host ESM) + lib/client.js (single-file client bundle)
-pnpm run test       # node:test suite over the built lib/ (no extra dev deps)
-pnpm run check      # build + test
+pnpm run test       # node:test suite over the built lib/
+pnpm run check      # typecheck + build + test
 pnpm run dev:sync   # push lib/ + assets into the live profile install for hot reload (no restart)
 ```
 
 Host-half changes (`src/index.ts`) take effect on the next `dsh web` restart;
 client-half and asset changes hot-apply through `dev:sync`.
+
+## Release
+
+```sh
+pnpm install --frozen-lockfile
+pnpm run check
+pnpm run release:pack    # creates release/dsh-march7th-skin-<version>.tgz
+pnpm run publish:dry-run # validates the registry payload without uploading it
+pnpm publish             # run after checking the version, changelog, and account access
+```
+
+The `prepack` hook runs the complete check automatically before packing or
+publishing. The package contains only runtime files, license information, English
+documentation, and preview images—not source, tests, or development scripts.
 
 ## Verify
 
@@ -108,5 +121,5 @@ With `dsh web` running:
 
 ## License
 
-Code is MIT; the assets are fan material of *Honkai: Star Rail* © miHoYo /
-HoYoverse, for personal, non-commercial use only. See `LICENSE`.
+Code is MIT; image assets are excluded from MIT and are for personal,
+non-commercial use only. See [`LICENSE`](../LICENSE).

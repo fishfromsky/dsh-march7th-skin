@@ -18,9 +18,9 @@ no services, emits no Cordis events, and never touches a model request.
 
 Click an image to view it at full size.
 
-| Light mode | Dark mode |
-|---|---|
-| [![March 7th skin · light mode](preview/light.webp)](preview/light.webp) | [![March 7th skin · dark mode](preview/dark.webp)](preview/dark.webp) |
+| Main page | Conversation page | Pop-up effect |
+|---|---|---|
+| [![March 7th skin · main page](preview/main.png)](preview/main.png) | [![March 7th skin · conversation page](preview/dialog.png)](preview/dialog.png) | [![March 7th skin · pop-up effect](preview/settings.png)](preview/settings.png) |
 
 ## Features
 

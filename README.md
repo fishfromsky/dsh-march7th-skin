@@ -8,9 +8,9 @@ DeepSeek Harness Web GUI 的独立可插拔 **三月七(《崩坏:星穹铁道�
 
 点击图片可查看完整尺寸。
 
-| 亮色模式 | 暗色模式 |
-|---|---|
-| [![三月七皮肤 · 亮色模式](docs/preview/light.webp)](docs/preview/light.webp) | [![三月七皮肤 · 暗色模式](docs/preview/dark.webp)](docs/preview/dark.webp) |
+| 主页面 | 对话页面 | 弹出框效果 |
+|---|---|---|
+| [![三月七皮肤 · 主页面](docs/preview/main.png)](docs/preview/main.png) | [![三月七皮肤 · 对话页面](docs/preview/dialog.png)](docs/preview/dialog.png) | [![三月七皮肤 · 弹出框效果](docs/preview/settings.png)](docs/preview/settings.png) |
 
 ## 特性
 

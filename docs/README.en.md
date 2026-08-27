@@ -34,29 +34,56 @@ Click an image to view it at full size.
 
 ## Install
 
-From the `deepseek-harness` repository root, install the plugin directly from
-GitHub:
+Both options below install the plugin directly from GitHub.
+
+### Using npx
+
+Use this option when running DeepSeek Harness temporarily through npm. Plugin
+management invokes `pnpm` internally, so verify that `pnpm --version` works
+first.
 
 ```sh
+# Install
+npx --yes @deepseek-ai/dsh@latest plugin --profile web add "github:fishfromsky/dsh-march7th-skin"
+
+# Start or restart Web
+npx --yes @deepseek-ai/dsh@latest web
+
+# Update
+npx --yes @deepseek-ai/dsh@latest plugin --profile web update dsh-march7th-skin --latest
+
+# Uninstall
+npx --yes @deepseek-ai/dsh@latest plugin --profile web remove dsh-march7th-skin
+```
+
+`npx` only runs the CLI temporarily; profiles and plugins remain under
+`$DSH_HOME/profiles/web` (`~/.dsh/profiles/web` by default). Use the same
+`DSH_HOME` when installing and starting the profile.
+
+### Running from the deepseek-harness source checkout
+
+Run these commands from the `deepseek-harness` repository root:
+
+```sh
+# Install
 pnpm dsh plugin --profile web add "github:fishfromsky/dsh-march7th-skin"
+
+# Start or restart Web
+pnpm dsh web
+
+# Update
+pnpm dsh plugin --profile web update dsh-march7th-skin --latest
+
+# Uninstall
+pnpm dsh plugin --profile web remove dsh-march7th-skin
 ```
 
 The DSH CLI downloads the plugin, records it as a web-profile dependency, and
-adds it to `dsh.profile.bundles`. Restart the web profile after installation:
-
-```sh
-pnpm dsh web
-```
+adds it to `dsh.profile.bundles`.
 
 The package's `dsh.bundle.patch` points to its bundled `cordis.patch.yml`, which
 inserts the `march7th-skin` row automatically. There is no need to edit the
 profile's `package.json` or `cordis.patch.yml` manually.
-
-To uninstall:
-
-```sh
-pnpm dsh plugin --profile web remove dsh-march7th-skin
-```
 
 ## License and assets
 

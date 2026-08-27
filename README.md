@@ -21,28 +21,54 @@ DeepSeek Harness Web GUI 的独立可插拔 **三月七(《崩坏:星穹铁道�
 
 ## 安装
 
-在 `deepseek-harness` 仓库根目录中执行以下命令，通过 GitHub 在线安装：
+以下两种方式都直接从 GitHub 在线安装。
+
+### 使用 npx
+
+适用于通过 npm 临时运行 DeepSeek Harness 的用户。插件管理内部会调用 `pnpm`，
+请先确认 `pnpm --version` 能正常执行。
 
 ```sh
+# 安装
+npx --yes @deepseek-ai/dsh@latest plugin --profile web add "github:fishfromsky/dsh-march7th-skin"
+
+# 启动或重启 Web
+npx --yes @deepseek-ai/dsh@latest web
+
+# 更新
+npx --yes @deepseek-ai/dsh@latest plugin --profile web update dsh-march7th-skin --latest
+
+# 卸载
+npx --yes @deepseek-ai/dsh@latest plugin --profile web remove dsh-march7th-skin
+```
+
+`npx` 只临时运行 CLI；profile 和插件仍会保存在 `$DSH_HOME/profiles/web`（默认
+`~/.dsh/profiles/web`）。安装和启动时应使用相同的 `DSH_HOME`。
+
+### 从 deepseek-harness 源码运行
+
+在 `deepseek-harness` 仓库根目录中执行：
+
+```sh
+# 安装
 pnpm dsh plugin --profile web add "github:fishfromsky/dsh-march7th-skin"
+
+# 启动或重启 Web
+pnpm dsh web
+
+# 更新
+pnpm dsh plugin --profile web update dsh-march7th-skin --latest
+
+# 卸载
+pnpm dsh plugin --profile web remove dsh-march7th-skin
 ```
 
 DSH CLI 会自动下载插件、写入 web profile 的依赖，并将其加入
-`dsh.profile.bundles`。安装完成后重启 Web：
-
-```sh
-pnpm dsh web
-```
+`dsh.profile.bundles`。
 
 插件的 `dsh.bundle.patch` 指向自带的 `cordis.patch.yml`，会自动向组合后的
 profile 插入 `march7th-skin` 行；无需手动修改 profile 的 `package.json` 或
 `cordis.patch.yml`。
-
-卸载：
-
-```sh
-pnpm dsh plugin --profile web remove dsh-march7th-skin
-```
 
 ## 素材来源与许可
 
